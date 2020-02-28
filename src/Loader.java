@@ -50,37 +50,31 @@ public class Loader {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+
+            String[] numbers = Concatenation.getNumbers();
+            String[] regionCodes = Concatenation.getRegionsCode();
+
             for (int regionCode = startRegion; regionCode < stopRegion; regionCode++) {
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder builder = new StringBuilder();
                 for (int number = 1; number < 1000; number++) {
                     for (char firstLetter : letters) {
                         for (char secondLetter : letters) {
                             for (char thirdLetter : letters) {
-                                buffer.append(firstLetter);
-                                buffer.append((number < 100) ? padNumber(number, 3) : number );
-                                buffer.append(secondLetter);
-                                buffer.append(thirdLetter);
-                                buffer.append((regionCode < 99) ? padNumber(regionCode, 2) : regionCode);
-                                buffer.append("\n");
+                                builder.append(firstLetter);
+                                builder.append(numbers[number]);
+                                builder.append(secondLetter);
+                                builder.append(thirdLetter);
+                                builder.append(regionCodes[regionCode]);
+                                builder.append("\n");
                             }
                         }
                     }
                 }
-                writer.write(buffer.toString());
+                writer.write(builder.toString());
             }
             writer.flush();
             writer.close();
         });
         return thread;
-    }
-
-    private static String padNumber(int number, int numberLength)
-    {
-        String numberStr = Integer.toString(number);
-        int padSize = numberLength - numberStr.length();
-        for(int i = 0; i < padSize; i++) {
-            numberStr = '0' + numberStr;
-        }
-        return numberStr;
     }
 }

@@ -1,16 +1,30 @@
+public class Concatenation {
 
-public class Concatenation
-{
-    public void main(String[] args)
+    protected static String[] getRegionsCode()
     {
-        long start = System.currentTimeMillis();
-
-        String str = "";
-        for(int i = 0; i < 20_000; i++)
-        {
-            str += "some text some text some text";
+        String[] regionsCode = new String[100];
+        for (int i = 0; i < regionsCode.length; i++) {
+            regionsCode[i] = (i < 10) ? padNumber(i, 2) : Integer.toString(i);
         }
+        return regionsCode;
+    }
 
-        System.out.println((System.currentTimeMillis() - start) + " ms");
+    protected static String[] getNumbers()
+    {
+        String[] numbers = new String[1000];
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = (i < 100) ? padNumber(i, 3) : Integer.toString(i);
+        }
+        return numbers;
+    }
+
+    private static String padNumber(int number, int numberLength)
+    {
+        String numberStr = Integer.toString(number);
+        int padSize = numberLength - numberStr.length();
+        for(int i = 0; i < padSize; i++) {
+            numberStr = '0' + numberStr;
+        }
+        return numberStr;
     }
 }
